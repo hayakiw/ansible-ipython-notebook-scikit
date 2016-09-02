@@ -1,0 +1,23 @@
+# encoding: utf-8
+# vim: ft=ruby expandtab shiftwidth=2 tabstop=2
+
+require 'yaml'
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu14.04"
+  config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+
+  config.vm.hostname = "study"
+
+  config.vm.network :private_network, ip: '192.168.88.30'
+
+  config.vm.network "forwarded_port", guest: 8888, host: 8888
+
+  config.vm.synced_folder "../", "/vagrant",
+                          :mount_options => ["dmode=777", "fmode=777"]
+
+  config.vm.synced_folder "ansible", "/vagrant/dev/ansible",
+                          :mount_options => ["dmode=755", "fmode=644"]
+
+  config.vm.provision :shell, :path => "ansible.sh"
+end

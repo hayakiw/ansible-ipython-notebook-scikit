@@ -1,0 +1,7 @@
+---
+- name: Vagrant environment
+  hosts: vagrant
+  sudo: yes
+  connection: local
+  roles:
+    - common

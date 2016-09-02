@@ -1,0 +1,68 @@
+---
+- name: check aleady
+  command: ls /vagrant/dev/ansible/log/common
+  register: common_result
+  ignore_errors: true
+
+#- name: apt-get update
+#  apt: update_cache=yes
+#  sudo: yes
+
+- name: apt-get install pkg
+  apt: pkg={{ item }} state=installed
+  sudo: yes
+  with_items:
+  - build-essential
+  - libssl-dev
+  - libxml2-dev
+  - libxslt1-dev
+  - libbz2-dev
+  - zlib1g-dev
+  - libjpeg62-dev
+  - libreadline-gplv2-dev
+  - python3-dev
+  when: common_result|failed
+
+#- name: download pip
+#  get_url:
+#    url: https://bootstrap.pypa.io/get-pip.py
+#    dest: /vagrant/dev/install/get-pip.py
+#  when: common_result|failed
+
+- name: install pip
+  shell: python3 /vagrant/dev/install/get-pip.py
+  when: common_result|failed
+
+- name: install virtualenv
+  shell: pip3 install virtualenv
+  when: common_result|failed
+
+- name: create venv
+  shell: virtualenv --always-copy /vagrant/venv3
+  when: common_result|failed
+
+- name: apt-get install pkg
+  apt: pkg={{ item }} state=installed
+  sudo: yes
+  with_items:
+  - libblas-dev
+  - liblas-dev
+  - liblapack-dev
+  - gfortran
+  - libfreetype6-dev
+  when: common_result|failed
+
+- name: pip install
+  sudo: yes
+  shell: >
+     pip install numpy;
+     pip install scipy;
+     pip install pandas;
+     pip install scikit-learn;
+     pip install matplotlib;
+     pip install ipython[notebook];
+  when: common_result|failed
+
+- name: touch log/common
+  file: path=/vagrant/dev/ansible/log/common state=touch
+  when: common_result|failed

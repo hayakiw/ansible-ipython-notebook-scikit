@@ -1,9 +1,9 @@
 ## Install modules
-numpy
-scipy
-pandas
-scikit-learn
-ipython[notebook]
+numpy 
+scipy 
+pandas 
+scikit-learn 
+ipython[notebook] 
 matplotlib
 
 ## Development
@@ -19,8 +19,8 @@ $ vagrant up
 ## Access
 
 ```
-$vagrant ssh -- -L 8888:localhost:8888
-$ipython notebook
+$ vagrant ssh -- -L 8888:localhost:8888
+$ ipython notebook
 ```
 
-access to http://localhost:8888/
+access to http://localhost:8888/ from local

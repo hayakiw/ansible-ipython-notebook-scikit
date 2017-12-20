@@ -60,6 +60,7 @@
      pip install pandas;
      pip install scikit-learn;
      pip install matplotlib;
+     pip install tensorflow;
      pip install ipython[notebook];
   when: common_result|failed
 
